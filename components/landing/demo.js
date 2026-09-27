@@ -1,0 +1,21 @@
+// Sample garments for the public landing page (not tied to any account)
+export const DEMO = {
+  shirt: { id: 901, name: 'White oxford shirt', category: 'Tops', color: '#F7F5F0' },
+  tee: { id: 902, name: 'Striped tee', category: 'Tops', color: '#EFEAE0' },
+  knit: { id: 903, name: 'Navy crewneck', category: 'Tops', color: '#2E3A57' },
+  jeans: { id: 904, name: 'Straight-leg jeans', category: 'Bottoms', color: '#4B6584' },
+  trousers: { id: 905, name: 'Olive trousers', category: 'Bottoms', color: '#6B7248' },
+  skirt: { id: 906, name: 'Rust skirt', category: 'Bottoms', color: '#A2482A' },
+  coat: { id: 907, name: 'Camel coat', category: 'Outerwear', color: '#B08A5B' },
+  denim: { id: 908, name: 'Denim jacket', category: 'Outerwear', color: '#6D87A6' },
+  slip: { id: 909, name: 'Rust slip dress', category: 'Dresses', color: '#A2482A' },
+  floral: { id: 910, name: 'Floral midi dress', category: 'Dresses', color: '#C98F9B' },
+  loafers: { id: 911, name: 'Brown loafers', category: 'Shoes', color: '#6A4128' },
+  sneakers: { id: 912, name: 'White sneakers', category: 'Shoes', color: '#F7F5F0' },
+  boots: { id: 913, name: 'Black boots', category: 'Shoes', color: '#2A2724' },
+  tote: { id: 914, name: 'Leather tote', category: 'Accessories', color: '#7A4A2A' },
+  scarf: { id: 915, name: 'Silk scarf', category: 'Accessories', color: '#C9A227' },
+  blazer: { id: 916, name: 'Black blazer', category: 'Outerwear', color: '#1F1E1C' },
+  check: { id: 917, name: 'Flannel check shirt', category: 'Tops', color: '#7A2F2F' },
+  heels: { id: 918, name: 'Red heels', category: 'Shoes', color: '#9B1B1B' },
+};

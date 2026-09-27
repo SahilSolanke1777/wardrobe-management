@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db" // or env("DATABASE_URL") for Postgres etc.
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         String    @default("USER")   // USER | ADMIN
+  status       String    @default("ACTIVE") // ACTIVE | SUSPENDED
+  createdAt    DateTime  @default(now())
+  sessions     Session[]
+  items        Item[]
+  outfits      Outfit[]
+  plans        Plan[]
+  styleRules   StyleRule[]
+}
+
+model Session {
+  token     String   @id
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model Item {
+  id         Int          @id @default(autoincrement())
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  category   String
+  color      String       @default("#D8C7A6")
+  season     String       @default("All year")
+  price      Float?
+  photo      String?
+  wearCount  Int          @default(0)
+  lastWornAt DateTime?
+  createdAt  DateTime     @default(now())
+  outfits    OutfitItem[]
+  rulesAsItem  StyleRule[] @relation("RuleItem")
+  rulesAsOther StyleRule[] @relation("RuleOther")
+}
+
+model Outfit {
+  id         Int          @id @default(autoincrement())
+  userId     Int
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  occasion   String       @default("Casual")
+  wearCount  Int          @default(0)
+  lastWornAt DateTime?
+  createdAt  DateTime     @default(now())
+  items      OutfitItem[]
+  plans      Plan[]
+}
+
+model OutfitItem {
+  outfitId Int
+  itemId   Int
+  outfit   Outfit @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  item     Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@id([outfitId, itemId])
+}
+
+model Plan {
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date     String  // YYYY-MM-DD
+  outfitId Int
+  outfit   Outfit  @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  worn     Boolean @default(false)
+
+  @@unique([userId, date])
+}
+
+// Things the stylist has learned from "why not?" feedback
+model StyleRule {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind        String   // not_me | wrong_colour | too_warm | worn_recently
+  itemId      Int
+  item        Item     @relation("RuleItem", fields: [itemId], references: [id], onDelete: Cascade)
+  otherItemId Int?
+  otherItem   Item?    @relation("RuleOther", fields: [otherItemId], references: [id], onDelete: Cascade)
+  season      String?
+  text        String
+  createdAt   DateTime @default(now())
+}

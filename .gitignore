@@ -1,0 +1,34 @@
+# dependencies & build output
+node_modules
+.next
+
+# secrets — never commit (holds your Pexels API key)
+.env
+.env.*
+!.env.example
+
+# local database (contains accounts and password hashes)
+prisma/*.db
+prisma/*.db-journal
+
+# photos people upload
+uploads/*
+!uploads/.gitkeep
+
+# Pexels photos: rebuild them with `python cloths/fetch_pexels.py` (their licence doesn't allow
+# redistributing the photos as a collection). metadata.json is kept for credits and colours.
+public/clothing/**/*.jpg
+public/clothing/**/*.jpeg
+public/clothing/**/*.png
+
+# personal reference images in cloths/ (scripts and README in that folder are committed)
+cloths/**/*.jpg
+cloths/**/*.jpeg
+cloths/**/*.png
+cloths/**/*.webp
+__pycache__/
+*.pyc
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
